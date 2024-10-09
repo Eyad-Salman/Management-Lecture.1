@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Management Interactive Quiz</title>
+  <style>
+        body {
+            font-family: 'Comic Sans MS', sans-serif;
+            background: linear-gradient(to bottom right, #d0f0ff, #ffffff);
+            color: #333;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #4a90e2;
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+        h2 {
+            color: #512da8;
+            font-size: 28px;
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+        .summary-section {
+            background-color: #fff7f0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border: 2px solid #ffa07a;
+        }
+        .summary-box {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #e0e0e0;
+        }
+        .summary-section h2 {
+            font-size: 24px;
+            color: #e65100;
+        }
+        .summary-section p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #f3f4f9;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress {
+            height: 20px;
+            background-color: #673ab7;
+            width: 0%;
+        }
+        .question {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f3f4f9;
+            border-radius: 8px;
+            border-left: 5px solid #512da8;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .question-title {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 18px;
+        }
+        .choices {
+            display: flex;
+            flex-direction: column; /* Changed to vertical layout */
+            margin-bottom: 10px;
+        }
+        .choice {
+            padding: 10px;
+            background-color: #e0f7fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px 0; /* Added margin for spacing */
+        }
+        .choice:hover {
+            background-color: #80deea;
+        }
+        .choice.correct {
+            background-color: #4caf50;
+            color: white;
+        }
+        .choice.incorrect {
+            background-color: #f44336;
+            color: white;
+        }
+        .choice.selected {
+            background-color: #87ceeb; /* Sky blue for selected */
+        }
+        .submit-btn {
+            display: inline-block;
+            padding: 8px 12px;
+            background-color: #673ab7;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px; /* Added margin for spacing */
+        }
+        .submit-btn:hover {
+            background-color: #512da8;
+        }
+        .answer, .explanation {
+            display: none;
+            margin-top: 10px;
+        }
+        .answer {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .explanation {
+            color: #333;
+            font-style: italic;
+        }
+        .score {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .status-mark {
+            font-size: 18px;
+        }
+        .reset-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px auto;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .reset-btn:hover {
+            background-color: #c62828;
+        }
+  </style>
+</head>
+<body>
+  <h1>Management Interactive Quiz</h1>
+  <div class="container">
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+    <div class="summary-section">
+      <h2>Important Notes on Management</h2>
+      <div class="summary-box">
+        <strong>1. Definition of Management:</strong> Management involves coordinating and overseeing the work activities of others to ensure that organizational goals are achieved efficiently and effectively.
+      </div>
+      <div class="summary-box">
+        <strong>2. Key Concepts:</strong>
+        <div>
+          <strong>Effectiveness vs. Efficiency:</strong>
+        </div>
+        <div>
+          <strong>Effectiveness:</strong> Doing the right things and achieving organizational goals.
+        </div>
+        <div>
+          <strong>Efficiency:</strong> Doing things right and maximizing output with minimal input.
+        </div>
+      </div>
+      <div class="summary-box">
+        <strong>3. Levels of Management:</strong>
+        <div>
+          <strong>First-Line Managers:</strong> Manage non-managerial employees involved in production or service delivery. Titles include supervisors and shift managers.
+        </div>
+        <div>
+          <strong>Middle Managers:</strong> Oversee first-line managers and are responsible for implementing organizational policies and plans.
+        </div>
+        <div>
+          <strong>Top Managers:</strong> Responsible for organization-wide decisions and setting goals that affect the entire organization. Titles include CEO, president, and vice president.
+        </div>
+      </div>
+      <div class="summary-box">
+        <strong>4. Functions of Management:</strong>
+        <div>
+          <strong>Planning:</strong> Setting goals and determining how to achieve them.
+        </div>
+        <div>
+          <strong>Organizing:</strong> Arranging resources and tasks to accomplish goals.
+        </div>
+        <div>
+          <strong>Leading:</strong> Motivating and directing people to work towards organizational goals.
+        </div>
+        <div>
+          <strong>Controlling:</strong> Monitoring progress and making adjustments to ensure goals are met.
+        </div>
+      </div>
+      <div class="summary-box">
+        <strong>5. Characteristics of Organizations:</strong>
+        <div>
+          Organizations have distinct purposes, are composed of people, and have a deliberate structure to achieve their goals.
+        </div>
+      </div>
+    </div>
+    <div class="score" id="scoreDisplay">
+      Score: 0
+    </div>
+    <div class="questions">
+      <div class="question">
+        <div class="question-title">
+          1. What is the primary purpose of management? <span class="status-mark" id="status1"></span>
+        </div>
+        <div class="choices">
+          <div class="choice" id="choice1A" onclick="selectChoice('choice1A')">
+            A) To make money
+          </div>
+          <div class="choice" id="choice1B" onclick="selectChoice('choice1B')">
+            B) To coordinate resources
+          </div>
+          <div class="choice" id="choice1C" onclick="selectChoice('choice1C')">
+            C) To develop new products
+          </div>
+          <div class="choice" id="choice1D" onclick="selectChoice('choice1D')">
+            D) To reduce costs
+          </div>
+        </div><button class="submit-btn" onclick="submitAnswer('choice1B', 'B', 'answer1', 'explanation1', 'status1')">Submit Answer</button>
+        <div id="answer1" class="answer">
+          Answer: B) To coordinate resources
+        </div>
+        <div id="explanation1" class="explanation">
+          Explanation: The primary purpose of management is to coordinate resources efficiently to achieve organizational goals.
+        </div>
+      </div>
+      <div class="question">
+        <div class="question-title">
+          2. What does effectiveness refer to in management? <span class="status-mark" id="status2"></span>
+        </div>
+        <div class="choices">
+          <div class="choice" id="choice2A" onclick="selectChoice('choice2A')">
+            A) Doing things efficiently
+          </div>
+          <div class="choice" id="choice2B" onclick="selectChoice('choice2B')">
+            B) Achieving organizational goals
+          </div>
+          <div class="choice" id="choice2C" onclick="selectChoice('choice2C')">
+            C) Reducing operational costs
+          </div>
+          <div class="choice" id="choice2D" onclick="selectChoice('choice2D')">
+            D) Planning for the future
+          </div>
+        </div><button class="submit-btn" onclick="submitAnswer('choice2B', 'B', 'answer2', 'explanation2', 'status2')">Submit Answer</button>
+        <div id="answer2" class="answer">
+          Answer: B) Achieving organizational goals
+        </div>
+        <div id="explanation2" class="explanation">
+          Explanation: Effectiveness in management refers to doing the right things and achieving the desired organizational goals.
+        </div>
+      </div>
+      <div class="question">
+        <div class="question-title">
+          3. Which of the following is NOT a function of management? <span class="status-mark" id="status3"></span>
+        </div>
+        <div class="choices">
+          <div class="choice" id="choice3A" onclick="selectChoice('choice3A')">
+            A) Planning
+          </div>
+          <div class="choice" id="choice3B" onclick="selectChoice('choice3B')">
+            B) Organizing
+          </div>
+          <div class="choice" id="choice3C" onclick="selectChoice('choice3C')">
+            C) Leading
+          </div>
+          <div class="choice" id="choice3D" onclick="selectChoice('choice3D')">
+            D) Recruiting
+          </div>
+        </div><button class="submit-btn" onclick="submitAnswer('choice3D', 'D', 'answer3', 'explanation3', 'status3')">Submit Answer</button>
+        <div id="answer3" class="answer">
+          Answer: D) Recruiting
+        </div>
+        <div id="explanation3" class="explanation">
+          Explanation: Recruiting is a part of human resource management, not a core function of management.
+        </div>
+      </div>
+      <div class="question">
+        <div class="question-title">
+          4. What is a common characteristic of organizations? <span class="status-mark" id="status4"></span>
+        </div>
+        <div class="choices">
+          <div class="choice" id="choice4A" onclick="selectChoice('choice4A')">
+            A) They are temporary
+          </div>
+          <div class="choice" id="choice4B" onclick="selectChoice('choice4B')">
+            B) They have a singular purpose
+          </div>
+          <div class="choice" id="choice4C" onclick="selectChoice('choice4C')">
+            C) They involve people
+          </div>
+          <div class="choice" id="choice4D" onclick="selectChoice('choice4D')">
+            D) They are non-hierarchical
+          </div>
+        </div><button class="submit-btn" onclick="submitAnswer('choice4C', 'C', 'answer4', 'explanation4', 'status4')">Submit Answer</button>
+        <div id="answer4" class="answer">
+          Answer: C) They involve people
+        </div>
+        <div id="explanation4" class="explanation">
+          Explanation: Organizations are composed of people who work together to achieve common goals.
+        </div>
+      </div>
+    </div><button class="reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+  </div>
+  <script>
+        let score = 0;
+
+        function selectChoice(choiceId) {
+            const choices = document.querySelectorAll('.choice');
+            choices.forEach(choice => {
+                choice.classList.remove('selected');
+            });
+            document.getElementById(choiceId).classList.add('selected');
+        }
+
+        function submitAnswer(correctChoiceId, correctAnswer, answerId, explanationId, statusId) {
+            const selectedChoice = document.querySelector('.choice.selected');
+            const statusMark = document.getElementById(statusId);
+            const answerDisplay = document.getElementById(answerId);
+            const explanationDisplay = document.getElementById(explanationId);
+
+            if (!selectedChoice) {
+                alert('Please select an answer before submitting!');
+                return;
+            }
+
+            // Show the correct answer
+            answerDisplay.style.display = 'block';
+            explanationDisplay.style.display = 'block';
+
+            // Check if the selected answer is correct
+            if (selectedChoice.id === correctChoiceId) {
+                score++;
+                selectedChoice.classList.add('correct');
+                statusMark.textContent = '✔️';
+            } else {
+                selectedChoice.classList.add('incorrect');
+                statusMark.textContent = '❌';
+                document.getElementById(correctChoiceId).classList.add('correct'); // Highlight correct answer
+            }
+
+            // Update the score display
+            document.getElementById('scoreDisplay').innerText = 'Score: ' + score;
+
+            // Update progress bar
+            const totalQuestions = document.querySelectorAll('.question').length;
+            const progress = ((score / totalQuestions) * 100).toFixed(2);
+            document.getElementById('progress').style.width = progress + '%';
+        }
+
+        function resetQuiz() {
+            score = 0;
+            document.getElementById('scoreDisplay').innerText = 'Score: 0';
+            const progress = 0;
+            document.getElementById('progress').style.width = progress + '%';
+
+            const choices = document.querySelectorAll('.choice');
+            choices.forEach(choice => {
+                choice.classList.remove('correct', 'incorrect', 'selected');
+            });
+
+            const answers = document.querySelectorAll('.answer');
+            const explanations = document.querySelectorAll('.explanation');
+            answers.forEach(answer => answer.style.display = 'none');
+            explanations.forEach(explanation => explanation.style.display = 'none');
+
+            const statusMarks = document.querySelectorAll('.status-mark');
+            statusMarks.forEach(mark => mark.textContent = '');
+        }
+  </script>
+</body>
+</html>
